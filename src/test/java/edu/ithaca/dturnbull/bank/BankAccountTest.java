@@ -33,6 +33,7 @@ class BankAccountTest {
         assertTrue(BankAccount.isEmailValid("redson@ithaca.edu"));
         assertFalse(BankAccount.isEmailValid("@gmail.com"));
         assertFalse(BankAccount.isEmailValid("a b@gmail.com")); 
+        assertFalse(BankAccount.isEmailValid("agmail.com"));
         
     }
 
