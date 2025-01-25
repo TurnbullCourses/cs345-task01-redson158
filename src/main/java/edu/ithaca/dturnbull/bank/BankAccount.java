@@ -39,12 +39,45 @@ public class BankAccount {
     }
 
 
-    public static boolean isEmailValid(String email){
-        if (email.indexOf('@') == -1){
+    public static boolean isEmailValid(String email) {
+        if (email == null || email.trim().isEmpty()) {
             return false;
         }
-        else {
-            return true;
+
+        int atPosition = email.indexOf('@');
+        int dotPosition = email.lastIndexOf('.');
+
+        // Checks if '@' exists and is not the first or last character
+        if (atPosition <= 0 || atPosition >= email.length() - 1) {
+            return false;
         }
+
+        // Checks if '.' exists after '@' and is not the last character
+        if (dotPosition < atPosition || dotPosition >= email.length() - 1) {
+            return false;
+        }
+
+        // checks part that starts with a valid character
+        char firstChar = email.charAt(0);
+        if (!Character.isLetterOrDigit(firstChar)) {
+            return false;
+        }
+
+        // checks no spaces exist in the email
+        if (email.contains(" ")) {
+            return false;
+        }
+
+        // checks "@" is followed by a valid domain
+        if (email.charAt(atPosition + 1) == '.' || dotPosition == atPosition + 1) {
+            return false;
+        }
+
+        // checks no consecutive dots exist
+        if (email.contains("..")) {
+            return false;
+        }
+
+        return true;
     }
 }
