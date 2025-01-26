@@ -20,6 +20,20 @@ class BankAccountTest {
 
         assertEquals(100, bankAccount.getBalance(), 0.001);
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
+
+        BankAccount testAccount = new BankAccount("rje@gmail.com", 500);
+        assertThrows(IllegalArgumentException.class, () -> testAccount.withdraw(-300));
+        assertThrows(InsufficientFundsException.class, () -> testAccount.withdraw(600));
+        testAccount.withdraw(0);
+        assertEquals(500, testAccount.getBalance(), 0.001);
+        testAccount.withdraw(1);
+        assertEquals(499, testAccount.getBalance(), 0.001);
+        testAccount.withdraw(249);
+        assertEquals(250, testAccount.getBalance(), 0.001);
+        testAccount.withdraw(249);
+        assertEquals(1, testAccount.getBalance(), 0.001);
+        testAccount.withdraw(1);
+        assertEquals(0, testAccount.getBalance(), 0.001);
     }
 
     @Test
