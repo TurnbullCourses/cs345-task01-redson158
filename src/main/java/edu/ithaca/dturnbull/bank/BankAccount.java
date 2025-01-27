@@ -87,7 +87,13 @@ public class BankAccount {
     *returns true if amount is poistive and has no more than 2 decimal places
     */
     public static boolean isAmountValid(double amount){
-        return false;
+        if (amount < 0){
+            return false;
+        }else if ((amount * 100) % 1 != 0){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /**
