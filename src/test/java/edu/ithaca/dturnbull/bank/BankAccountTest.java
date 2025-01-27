@@ -133,8 +133,8 @@ class BankAccountTest {
         bankAccount.transfer(bankAccount2, 0);
         assertEquals(0, bankAccount.getBalance(), 0.001); //Border case - zero amount
         assertEquals(300, bankAccount2.getBalance(), 0.001); //equivalence - positive amount
-        bankAccount2.transfer(bankAccount, 150.90);
-        assertEquals(150.90, bankAccount.getBalance(), 0.001); //equivalence - positive amount
-        assertEquals(149.10, bankAccount2.getBalance(), 0.001); //equivalence - positive amount
+        bankAccount2.transfer(bankAccount, 150.96);
+        assertEquals(150.96, bankAccount.getBalance(), 0.001); //equivalence - positive amount
+        assertEquals(149.04, bankAccount2.getBalance(), 0.001); //equivalence - positive amount
     }
 }
