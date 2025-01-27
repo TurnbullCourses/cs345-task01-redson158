@@ -32,18 +32,18 @@ class BankAccountTest {
         assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
 
         BankAccount testAccount = new BankAccount("rje@gmail.com", 500);
-        assertThrows(IllegalArgumentException.class, () -> testAccount.withdraw(-300));
-        assertThrows(InsufficientFundsException.class, () -> testAccount.withdraw(600));
+        assertThrows(IllegalArgumentException.class, () -> testAccount.withdraw(-300)); //equivalence - negative amount
+        assertThrows(InsufficientFundsException.class, () -> testAccount.withdraw(600)); //equivalence - not enough funds
         testAccount.withdraw(0);
-        assertEquals(500, testAccount.getBalance(), 0.001);
+        assertEquals(500, testAccount.getBalance(), 0.001); //Border case - zero amount
         testAccount.withdraw(1);
-        assertEquals(499, testAccount.getBalance(), 0.001);
+        assertEquals(499, testAccount.getBalance(), 0.001); //Border case - just above zero
         testAccount.withdraw(249);
-        assertEquals(250, testAccount.getBalance(), 0.001);
+        assertEquals(250, testAccount.getBalance(), 0.001); //Border case - middle of range
         testAccount.withdraw(249);
-        assertEquals(1, testAccount.getBalance(), 0.001);
+        assertEquals(1, testAccount.getBalance(), 0.001); //Border case - almost all funds
         testAccount.withdraw(1);
-        assertEquals(0, testAccount.getBalance(), 0.001);
+        assertEquals(0, testAccount.getBalance(), 0.001); //Border case - all funds
     }
 
     @Test
