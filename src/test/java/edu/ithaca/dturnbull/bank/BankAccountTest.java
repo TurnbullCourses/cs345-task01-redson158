@@ -17,10 +17,10 @@ class BankAccountTest {
         testAccount.withdraw(250);
         assertEquals(250,  testAccount.getBalance(), 0.001); // Equivalence Class: valid account, Border case: No
         testAccount.withdraw(250);
-        assertEquals(0,  testAccount.getBalance(), 0.001); // Equivalence Class: valid account, Border case: Yes
+        assertEquals(0,  testAccount.getBalance(), 0.001); // Equivalence Class: valid account, Border case: zero balance
 
         BankAccount testAccount2 = new BankAccount("a@b.com", 0);
-        assertEquals(0, testAccount2.getBalance(), 0.001); // Equivalence Class: valid account, Border case: Yes
+        assertEquals(0, testAccount2.getBalance(), 0.001); // Equivalence Class: valid account, Border case: zero balance
     }
 
     @Test
