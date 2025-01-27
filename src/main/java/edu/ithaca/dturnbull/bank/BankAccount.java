@@ -82,4 +82,29 @@ public class BankAccount {
 
         return true;
     }
+
+    /**
+    *returns true if amount is poistive and has no more than 2 decimal places
+    */
+    public static boolean isAmountValid(double amount){
+        return false;
+    }
+
+    /**
+     * @post increases the balance by amount
+     * @param throws IllegalArgumentException if amount is negative
+     */
+    public void deposit(double amount){
+        balance += amount;
+    }
+
+    /**
+     * @post transfers amount from this account to other account
+     * @throws InsufficientFundsException if amount is greater than balance
+     * @throws IllegalArgumentException if amount is negative
+     */
+    public void transfer(BankAccount other, double amount) throws InsufficientFundsException{
+        this.withdraw(amount);
+        other.deposit(amount);
+    }
 }
