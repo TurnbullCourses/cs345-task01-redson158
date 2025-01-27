@@ -92,7 +92,7 @@ public class BankAccount {
 
     /**
      * @post increases the balance by amount
-     * @param throws IllegalArgumentException if amount is negative
+     * @throws IllegalArgumentException if amount is negative or invalid
      */
     public void deposit(double amount){
         balance += amount;
@@ -101,7 +101,7 @@ public class BankAccount {
     /**
      * @post transfers amount from this account to other account
      * @throws InsufficientFundsException if amount is greater than balance
-     * @throws IllegalArgumentException if amount is negative
+     * @throws IllegalArgumentException if amount is negative or invalid
      */
     public void transfer(BankAccount other, double amount) throws InsufficientFundsException{
         this.withdraw(amount);

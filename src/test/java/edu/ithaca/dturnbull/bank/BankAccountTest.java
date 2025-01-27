@@ -85,6 +85,56 @@ class BankAccountTest {
         assertEquals(200, bankAccount.getBalance(), 0.001);
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("rje@gmail.com", -100)); // Equivalence Class: invalid balance, Border case: negative
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("rje@gmail.com", 0.001)); // Equivalence Class: invalid balance, Border case: less than 0.01
+        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("rje@gmail.com", 4.955)); // Equivalence Class: invalid balance, Border case: more than 2 decimal places
     }
 
+    @Test
+    void isAmountValidTest(){
+        assertTrue(BankAccount.isAmountValid(0)); // Equivalence Class: valid amount, Border case: zero
+        assertTrue(BankAccount.isAmountValid(0.01)); // Equivalence Class: valid amount, Border case: positive
+        assertTrue(BankAccount.isAmountValid(100.99)); // Equivalence Class: valid amount, Border case: large positive
+        assertFalse(BankAccount.isAmountValid(-0.01)); // Equivalence Class: invalid amount, Border case: negative
+        assertFalse(BankAccount.isAmountValid(0.001)); // Equivalence Class: invalid amount, Border case: sless than 0.01
+        assertFalse(BankAccount.isAmountValid(4.955)); // Equivalence Class: invalid amount, Border case: more than 2 decimal places
+    }
+
+    @Test
+    void depositTest(){
+        BankAccount bankAccount = new BankAccount("rje@gmail.com", 0);
+        assertEquals(0, bankAccount.getBalance(), 0.001); 
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(-100)); //equivalence - negative amount
+        bankAccount.deposit(0);
+        assertEquals(0, bankAccount.getBalance(), 0.001); //Border case - zero amount
+        bankAccount.deposit(10.99);
+        assertEquals(10.99, bankAccount.getBalance(), 0.001); //equivalence - positive amount
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(0.001)); //equivalence - less than 0.01
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.deposit(4.955)); //equivalence - more than 2 decimal places
+        bankAccount.deposit(100.01);
+        assertEquals(111, bankAccount.getBalance(), 0.001); //Border case - large amount
+    }
+
+    @Test
+    void transferTest(){
+        BankAccount bankAccount = new BankAccount("rje@gmail.com", 100);
+        BankAccount bankAccount2 = new BankAccount("redson@ithaca.edu", 200);
+        assertThrows(InsufficientFundsException.class, () -> bankAccount.transfer(bankAccount2, 200)); //equivalence - not enough funds
+        assertThrows(InsufficientFundsException.class, () -> bankAccount2.transfer(bankAccount, 400)); //equivalence - not enough funds
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(bankAccount2, -100)); //equivalence - negative amount
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(bankAccount2, 0.001)); //equivalence - less than 0.01
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(bankAccount2, 4.955)); //equivalence - more than 2 decimal places
+        bankAccount.transfer(bankAccount2, 50);
+        assertEquals(50, bankAccount.getBalance(), 0.001); //equivalence - positive amount
+        assertEquals(250, bankAccount2.getBalance(), 0.001); //equivalence - positive amount
+        bankAccount.transfer(bankAccount2, 50);
+        assertEquals(0, bankAccount.getBalance(), 0.001); //Border case - zero balance
+        assertEquals(300, bankAccount2.getBalance(), 0.001); //equivalence - positive amount
+        bankAccount.transfer(bankAccount2, 0);
+        assertEquals(0, bankAccount.getBalance(), 0.001); //Border case - zero amount
+        assertEquals(300, bankAccount2.getBalance(), 0.001); //equivalence - positive amount
+        bankAccount2.transfer(bankAccount, 150.95);
+        assertEquals(150.95, bankAccount.getBalance(), 0.001); //equivalence - positive amount
+        assertEquals(149.05, bankAccount2.getBalance(), 0.001); //equivalence - positive amount
+    }
 }
