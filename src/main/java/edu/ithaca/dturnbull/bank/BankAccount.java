@@ -33,7 +33,7 @@ public class BankAccount {
     /**
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      * @throws InsufficientFundsException if amount is greater than balance
-     * @throws IllegalArgumentException if amount is negative
+     * @throws IllegalArgumentException if amount is negative or invalid
      */
     public void withdraw (double amount) throws InsufficientFundsException{
         if (amount <= balance){
@@ -105,7 +105,11 @@ public class BankAccount {
      * @throws IllegalArgumentException if amount is negative or invalid
      */
     public void deposit(double amount){
-        balance += amount;
+        if(isAmountValid(amount)){
+            balance += amount;
+        }else{
+            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot deposit");
+        }
     }
 
     /**
