@@ -93,7 +93,7 @@ public class BankAccount {
     public static boolean isAmountValid(double amount){
         if (amount < 0){
             return false;
-        }else if ((amount * 100) % 1 != 0){
+        }else if (Math.abs((amount * 100) % 1) > 1e-9){
             return false;
         }else{
             return true;
@@ -118,7 +118,15 @@ public class BankAccount {
      * @throws IllegalArgumentException if amount is negative or invalid
      */
     public void transfer(BankAccount other, double amount) throws InsufficientFundsException{
-        this.withdraw(amount);
-        other.deposit(amount);
+        if(isAmountValid(amount)){
+            if(amount <= balance){
+                balance -= amount;
+                other.deposit(amount);
+            }else{
+                throw new InsufficientFundsException("Not enough money");
+            }
+        }else{
+            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot transfer");
+        }
     }
 }
