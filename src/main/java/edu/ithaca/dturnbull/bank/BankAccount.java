@@ -91,15 +91,19 @@ public class BankAccount {
     }
 
     /**
-    *returns true if amount is poistive and has no more than 2 decimal places
+    *returns true if amount is positive and has no more than 2 decimal places
     */
     public static boolean isAmountValid(double amount){
         if (amount < 0){
             return false;
-        }else if (Math.abs((amount * 100) % 1) > 1e-9){
-            return false;
         }else{
-            return true;
+            String amountString = Double.toString(amount);
+            int decimalIndex = amountString.indexOf('.');
+            if (decimalIndex == -1){
+                return true;
+            }else{
+                return amountString.length() - decimalIndex <= 3;
+            }
         }
     }
 
