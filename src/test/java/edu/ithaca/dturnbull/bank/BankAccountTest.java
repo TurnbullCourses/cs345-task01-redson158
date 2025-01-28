@@ -133,6 +133,8 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(bankAccount2, -100)); //equivalence - negative amount
         assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(bankAccount2, 0.001)); //equivalence - less than 0.01
         assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(bankAccount2, 4.955)); //equivalence - more than 2 decimal places
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(null, 100)); //equivalence - null account
+        assertThrows(IllegalArgumentException.class, () -> bankAccount.transfer(bankAccount, 100)); //equivalence - same account
         bankAccount.transfer(bankAccount2, 50);
         assertEquals(50, bankAccount.getBalance(), 0.001); //equivalence - positive amount
         assertEquals(250, bankAccount2.getBalance(), 0.001); //equivalence - positive amount

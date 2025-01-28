@@ -123,17 +123,25 @@ public class BankAccount {
      * @post transfers amount from this account to other account
      * @throws InsufficientFundsException if amount is greater than balance
      * @throws IllegalArgumentException if amount is negative or invalid
+     * @throws IllegalArgumentException if other is null
+     * @throws IllegalArgumentException if other is the same account
      */
     public void transfer(BankAccount other, double amount) throws InsufficientFundsException{
-        if(isAmountValid(amount)){
-            if(amount <= balance){
-                balance -= amount;
-                other.deposit(amount);
-            }else{
-                throw new InsufficientFundsException("Not enough money");
-            }
+        if(other == null){
+            throw new IllegalArgumentException("No Other Account, cannot transfer");
+        }else if(email == other.getEmail()){
+            throw new IllegalArgumentException("Cannot transfer to the same account");
         }else{
-            throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot transfer");
+            if(isAmountValid(amount)){
+                if(amount <= balance){
+                    balance -= amount;
+                    other.deposit(amount);
+                }else{
+                    throw new InsufficientFundsException("Not enough money");
+                }
+            }else{
+                throw new IllegalArgumentException("Amount: " + amount + " is invalid, cannot transfer");
+            }
         }
     }
 }
