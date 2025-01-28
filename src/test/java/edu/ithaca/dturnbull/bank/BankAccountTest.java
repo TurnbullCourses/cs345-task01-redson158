@@ -24,6 +24,12 @@ class BankAccountTest {
     }
 
     @Test
+    void getEmailTest() {
+        BankAccount bankAccount = new BankAccount("rje@gmail.com", 200);
+        assertEquals("rje@gmail.com", bankAccount.getEmail());
+    }
+
+    @Test
     void withdrawTest() throws InsufficientFundsException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         bankAccount.withdraw(100);
