@@ -38,12 +38,15 @@ class BankAccountTest {
         assertEquals(500, testAccount.getBalance(), 0.001); //Border case - zero amount
         testAccount.withdraw(1);
         assertEquals(499, testAccount.getBalance(), 0.001); //Border case - just above zero
-        testAccount.withdraw(249);
-        assertEquals(250, testAccount.getBalance(), 0.001); //Border case - middle of range
-        testAccount.withdraw(249);
+        testAccount.withdraw(249.90);
+        assertEquals(249.10, testAccount.getBalance(), 0.001); //equivalence - middle value
+        testAccount.withdraw(248.10);
         assertEquals(1, testAccount.getBalance(), 0.001); //Border case - almost all funds
         testAccount.withdraw(1);
         assertEquals(0, testAccount.getBalance(), 0.001); //Border case - all funds
+        assertThrows(IllegalArgumentException.class, () -> testAccount.withdraw(0.001)); //equivalence - less than 0.01
+        assertThrows(IllegalArgumentException.class, () -> testAccount.withdraw(4.955)); //equivalence - more than 2 decimal places
+
     }
 
     @Test
