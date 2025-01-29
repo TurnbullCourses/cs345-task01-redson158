@@ -102,10 +102,11 @@ class BankAccountTest {
     @Test
     void isAmountValidTest(){
         assertTrue(BankAccount.isAmountValid(0)); // Equivalence Class: valid amount, Border case: zero
-        assertTrue(BankAccount.isAmountValid(0.01)); // Equivalence Class: valid amount, Border case: positive
+        assertTrue(BankAccount.isAmountValid(0.01)); // Equivalence Class: valid amount, Border case: small/border positive - 2 decimal places
         assertTrue(BankAccount.isAmountValid(100.99)); // Equivalence Class: valid amount, Border case: large positive
-        assertFalse(BankAccount.isAmountValid(-0.01)); // Equivalence Class: invalid amount, Border case: negative
-        assertFalse(BankAccount.isAmountValid(0.001)); // Equivalence Class: invalid amount, Border case: sless than 0.01
+        assertFalse(BankAccount.isAmountValid(-100)); // Equivalence Class: invalid amount, Border case:  large negative
+        assertFalse(BankAccount.isAmountValid(-0.01)); // Equivalence Class: invalid amount, Border case: small/border negative
+        assertFalse(BankAccount.isAmountValid(0.001)); // Equivalence Class: invalid amount, Border case: less than 0.01
         assertFalse(BankAccount.isAmountValid(4.955)); // Equivalence Class: invalid amount, Border case: more than 2 decimal places
     }
 
